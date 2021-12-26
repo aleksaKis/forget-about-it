@@ -1,0 +1,31 @@
+.modal_background {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.confirm {
+  padding: 30px 30px 15px 30px;
+  background: #b3b3b3;
+  border-radius: 8px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  span {
+    margin-bottom: 5px;
+  }
+}
+
+.modal_buttons {
+  margin-top: 21px;
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+}

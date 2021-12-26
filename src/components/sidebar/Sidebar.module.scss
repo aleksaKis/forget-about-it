@@ -1,0 +1,40 @@
+@keyframes rotate-logo {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.navigation_nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: center;
+  @media (max-width: 900px) {
+    flex-direction: row;
+  }
+}
+
+.version {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}

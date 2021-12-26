@@ -1,0 +1,12 @@
+[
+  {
+    "id": 0,
+    "description": "Async todo",
+    "createdAt": "2011-10-05T14:48:00.000Z"
+  },
+  {
+    "id": 1,
+    "description": "Async todo 2",
+    "createdAt": "2011-10-05T14:48:00.000Z"
+  }
+]

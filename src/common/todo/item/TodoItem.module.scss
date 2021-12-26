@@ -1,0 +1,25 @@
+.todo_item {
+  &_button {
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition: transform 50ms ease-in;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+
+  .delete {
+    color: #ff8360 !important;
+    border: 1px solid #ff8360 !important;
+    background: transparent !important;
+  }
+
+  .edit {
+    color: seagreen !important;
+    border: 1px solid green !important;
+    background: transparent !important;
+  }
+}
