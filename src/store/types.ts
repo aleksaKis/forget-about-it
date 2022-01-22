@@ -4,7 +4,7 @@ export interface Todo {
   id: number;
   description: string;
   createdAt: Date | string;
-  protected?: boolean;
+  isProtected?: boolean;
 }
 
 export interface TodoState {

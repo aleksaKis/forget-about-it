@@ -5,10 +5,11 @@ import { useState } from "react";
 import { IconButton } from "../../../components/buttons/icon";
 import { ReactComponent as PenIcon } from "../../../components/icons/pen-solid.svg";
 import { ReactComponent as TrashIcon } from "../../../components/icons/trash-solid.svg";
-import { TextInput } from "../../../components/TextInput/TextInput";
 import styled from "styled-components";
 import { styleConstants } from "../../../styles/style-contatns";
 import { Todo } from "../../../store/types";
+import { TextInput } from "../../../components/text-input/TextInput";
+import { DATE_OPTIONS } from "./constants";
 
 interface TodoItemProps {
   item: Todo;
@@ -71,33 +72,30 @@ const SideDetails = styled.span`
 
 const TodoItem = (props: TodoItemProps) => {
   const { item, index, onRemove, onUpdate } = props;
-  const ID = item.id;
-  const date = new Date(item.createdAt).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "numeric",
-    year: "2-digit",
-    hour: "2-digit",
-  });
+  const date = new Date(item.createdAt).toLocaleDateString(
+    "en-US",
+    DATE_OPTIONS
+  );
 
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(item.description);
 
-  const handleRemoveTodo = () => {
-    if (!item.protected) {
-      onRemove(ID);
+  const handleRemoveTodo = (): void => {
+    if (!item.isProtected) {
+      onRemove(item.id);
     }
   };
 
-  const handleUpdateTodo = () => {
+  const handleUpdateTodo = (): void => {
     onUpdate(index, inputValue);
     setIsEditing(false);
   };
 
-  const enableEditMode = () => {
+  const enableEditMode = (): void => {
     setIsEditing(true);
   };
 
-  const handleInputChange = (value: string) => {
+  const handleInputChange = (value: string): void => {
     setInputValue(value);
   };
 
@@ -132,7 +130,7 @@ const TodoItem = (props: TodoItemProps) => {
     </IconButton>
   );
 
-  const trashIcon = !item.protected ? (
+  const trashIcon = !item.isProtected ? (
     <IconButton
       className={[styles.todo_item_button, styles.delete].join(" ")}
       data-testid="remove-item"

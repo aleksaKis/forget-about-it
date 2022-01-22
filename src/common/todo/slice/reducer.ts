@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTodoData } from "../../../services/api";
 import { RootState, Todo, TodoState } from "../../../store/types";
+import { AddTodoPayload, UpdateTodoPayload } from "./types";
 
 const initialState: TodoState = {
   todos: [],
@@ -27,21 +28,18 @@ export const todoSlice = createSlice({
     // placeholder for saga
     fetchTodos: (state, action: PayloadAction) => {},
 
-    addTodos: (state, action: PayloadAction<{ todos: Todo[] }>) => {
-      if (action.payload.todos && action.payload.todos.length) {
-        state.todos = action.payload.todos;
+    addTodos: (state, action: PayloadAction<Todo[]>) => {
+      if (action.payload && action.payload.length) {
+        state.todos = action.payload;
       }
     },
 
-    addTodo: (
-      state,
-      action: PayloadAction<{ description: string; isProtected: boolean }>
-    ) => {
+    addTodo: (state, action: PayloadAction<AddTodoPayload>) => {
       state.todos.push({
         id: generateTodoId(state),
         description: action.payload.description,
         createdAt: new Date(Date.now()).toISOString(),
-        protected: action.payload.isProtected,
+        isProtected: action.payload.isProtected,
       });
     },
 
@@ -49,10 +47,7 @@ export const todoSlice = createSlice({
       state.todos = state.todos.filter((item) => item.id !== action.payload);
     },
 
-    updateTodo: (
-      state,
-      action: PayloadAction<{ index: number; description: string }>
-    ) => {
+    updateTodo: (state, action: PayloadAction<UpdateTodoPayload>) => {
       state.todos[action.payload.index].description =
         action.payload.description;
     },

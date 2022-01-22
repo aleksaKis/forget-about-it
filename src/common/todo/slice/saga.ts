@@ -11,7 +11,7 @@ import { Todo } from "../../../store/types";
 function* fetchTodos(action: PayloadAction) {
   const todos = loadTodosFromLocalStorage();
   if (todos && todos.length) {
-    yield put(addTodos({ todos: todos }));
+    yield put(addTodos(todos));
   }
 }
 

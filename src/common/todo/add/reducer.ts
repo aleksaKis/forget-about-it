@@ -1,6 +1,6 @@
 export interface AddTodoState {
   editMode: boolean;
-  protected: boolean;
+  isProtected: boolean;
   description: string;
 }
 
@@ -35,11 +35,11 @@ export function AddTodoReducer(
     case AddTodoActions.Type.SET_EDIT_MODE:
       return { ...state, editMode: action.isEditMode };
     case AddTodoActions.Type.SET_PROTECTED:
-      return { ...state, protected: action.isProtected };
+      return { ...state, isProtected: action.isProtected };
     case AddTodoActions.Type.SET_DESCRIPTION:
       return { ...state, description: action.description };
     case AddTodoActions.Type.RESET_DESCRIPTION:
-      return { ...state, description: "", editMode: false, protected: false };
+      return { ...state, description: "", editMode: false, isProtected: false };
 
     case AddTodoActions.Type.SET_DESCRIPTION_AND_EDIT_MODE:
       return {
@@ -53,8 +53,8 @@ export function AddTodoReducer(
   }
 }
 
-export const initialState = {
+export const initialState: AddTodoState = {
   editMode: false,
-  protected: false,
+  isProtected: false,
   description: "",
 };

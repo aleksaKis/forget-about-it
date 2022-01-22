@@ -1,7 +1,6 @@
 import { MemoryRouter } from "react-router-dom";
-import { render, screen } from "../../../testing/test-utils";
+import { render, screen } from "../../../testing/custom_render";
 import Main from "../Main";
-import React from "react";
 import { HelmetProvider } from "react-helmet-async";
 
 describe("Main", () => {

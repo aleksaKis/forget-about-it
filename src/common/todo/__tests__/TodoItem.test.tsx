@@ -1,8 +1,9 @@
-import { render, screen, fireEvent } from "../../../testing/test-utils";
+import { render, screen, fireEvent } from "../../../testing/custom_render";
 import TodoItem from "../item/TodoItem";
 import { mockTodoItem } from "../../../testing/__mocks__/mockTodoItem";
 import userEvent from "@testing-library/user-event";
 import { mockProtectedTodoItem } from "../../../testing/__mocks__/mockProtectedTodoItem";
+import { noop } from "../../../testing/utils/constants";
 
 const TWO_DIGIT = "2-digit";
 const DATE_OPTIONS = {
@@ -10,22 +11,20 @@ const DATE_OPTIONS = {
   month: "numeric",
   year: TWO_DIGIT,
   hour: TWO_DIGIT,
-};
+} as const;
 
 const FAKE_INDEX = 1;
 
-// mismatch type for DATE_OPTIONS
 const localDateString = new Date(mockTodoItem.createdAt).toLocaleDateString(
   "en-US",
-  // @ts-ignore
   DATE_OPTIONS
 );
 describe("TodoItem", () => {
   it("should display correct items details", () => {
     render(
       <TodoItem
-        onRemove={() => {}}
-        onUpdate={() => {}}
+        onRemove={noop}
+        onUpdate={noop}
         item={mockTodoItem}
         index={FAKE_INDEX}
       />
@@ -36,7 +35,7 @@ describe("TodoItem", () => {
     expect(screen.getByText(localDateString)).toBeInTheDocument();
   });
 
-  it("should not display input field on component mounting", () => {
+  it("should NOT display input on component first mount", () => {
     const todoItem = render(
       <TodoItem
         onRemove={() => {}}
@@ -52,7 +51,7 @@ describe("TodoItem", () => {
     expect(screen.getByText(mockTodoItem.description)).toBeInTheDocument();
   });
 
-  it("should allow editing todos", () => {
+  it("should allow edit of todo description when edit mode is toggled", () => {
     const handleUpdateMock = jest.fn();
     render(
       <TodoItem
@@ -86,7 +85,7 @@ describe("TodoItem", () => {
     expect(handleUpdateMock).toHaveBeenCalledWith(FAKE_INDEX, NEW_DESCRIPTION);
   });
 
-  it("should remove todo on trash can click", () => {
+  it("should remove current todo when trash icon is clicked", () => {
     const mockedOnRemoveHandler = jest.fn();
     render(
       <TodoItem
@@ -101,7 +100,7 @@ describe("TodoItem", () => {
     expect(mockedOnRemoveHandler).toBeCalledWith(mockTodoItem.id);
   });
 
-  it("should not allow removing protected todo", () => {
+  it("should NOT allow removing protected todo", () => {
     const mockedOnRemoveHandler = jest.fn();
 
     render(
