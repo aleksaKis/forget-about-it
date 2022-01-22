@@ -1,17 +1,16 @@
 import React, { useCallback, useReducer } from "react";
-import { addTodo } from "../slice/reducer";
 import classes from "./AddTodo.module.scss";
-import { useAppDispatch } from "../../../store/hooks";
 import { AddTodoActions, AddTodoReducer, initialState } from "./reducer";
 import { PrimaryButton } from "../../../components/buttons/primary";
 import { IconButton } from "../../../components/buttons/icon";
 import { ReactComponent as PlusIcon } from "../../../components/icons/plus-solid.svg";
 import { ReactComponent as LockIcon } from "../../../components/icons/lock-solid.svg";
-import { TextInput } from "../../../components/TextInput/TextInput";
 import styled from "styled-components";
 import { GlobalHotKeys } from "react-hotkeys";
+import { TextInput } from "../../../components/text-input/TextInput";
+import { AddTodoPayload } from "../slice/types";
 
-const AddTodoWrapper = styled.form`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,8 +22,12 @@ const AddTodoWrapper = styled.form`
   position: relative;
 `;
 
-const AddTodo = (): JSX.Element => {
-  const todoDispatch = useAppDispatch();
+interface AddTodoProps {
+  onAdd: (todo: AddTodoPayload) => void;
+}
+
+const AddTodo = (props: AddTodoProps): JSX.Element => {
+  const { onAdd } = props;
   const [state, dispatch] = useReducer(AddTodoReducer, initialState);
 
   const resetDescription = useCallback((): void => {
@@ -34,15 +37,15 @@ const AddTodo = (): JSX.Element => {
   }, []);
 
   const dispatchAddTodo = useCallback((): void => {
-    const newTodo = {
+    const newTodo: AddTodoPayload = {
       description: state.description,
-      isProtected: state.protected,
+      isProtected: state.isProtected,
     };
     if (newTodo.description.trim()) {
-      todoDispatch(addTodo(newTodo));
+      onAdd(newTodo);
     }
     resetDescription();
-  }, [resetDescription, state.description, state.protected, todoDispatch]);
+  }, [resetDescription, state.description, state.isProtected, onAdd]);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent): void => {
@@ -56,9 +59,9 @@ const AddTodo = (): JSX.Element => {
   const handleProtected = useCallback((): void => {
     dispatch({
       type: AddTodoActions.Type.SET_PROTECTED,
-      isProtected: !state.protected,
+      isProtected: !state.isProtected,
     });
-  }, [state.protected]);
+  }, [state.isProtected]);
 
   const handleDescriptionChange = useCallback((value: string): void => {
     dispatch({
@@ -86,7 +89,8 @@ const AddTodo = (): JSX.Element => {
   if (state.editMode) {
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
-        <AddTodoWrapper
+        <Container
+          onSubmit={dispatchAddTodo}
           data-testid="add_todo_wrapper"
           className={classes.add_todo}
           onKeyDown={handleKeyDown}
@@ -97,6 +101,7 @@ const AddTodo = (): JSX.Element => {
             onValueChange={handleDescriptionChange}
           />
           <input
+            data-testid="protect-todo"
             type="checkbox"
             id="checkboxChip"
             className={classes.protect}
@@ -112,7 +117,7 @@ const AddTodo = (): JSX.Element => {
           >
             Add
           </PrimaryButton>
-        </AddTodoWrapper>
+        </Container>
       </GlobalHotKeys>
     );
   } else {

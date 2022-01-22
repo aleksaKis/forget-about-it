@@ -30,7 +30,7 @@ describe("TodoSlice", () => {
           id: 1,
           createdAt: newDate,
           description: "new todo",
-          protected: false,
+          isProtected: false,
         },
       ],
     });

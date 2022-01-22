@@ -10,11 +10,13 @@ import {
   selectTodos,
   fetchTodos,
   removeTodoById,
+  addTodo,
 } from "../../common/todo/slice/reducer";
 import RemoveAllTodos from "../../common/todo/remove-all/RemoveAllTodos";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
+import { AddTodoPayload } from "../../common/todo/slice/types";
 
 const Header = styled.div`
   display: flex;
@@ -43,6 +45,10 @@ export function Dashboard() {
     dispatch(removeAllTodos());
   };
 
+  const handleAddTodo = (todo: AddTodoPayload): void => {
+    dispatch(addTodo(todo));
+  };
+
   return (
     <Fragment>
       <Helmet>
@@ -62,7 +68,7 @@ export function Dashboard() {
           handleUpdate={handleTodoUpdate}
           filter={search}
         />
-        <AddTodo />
+        <AddTodo onAdd={handleAddTodo} />
       </div>
     </Fragment>
   );

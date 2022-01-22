@@ -12,6 +12,15 @@ import {
 } from "react";
 import { styleConstants } from "../../styles/style-contatns";
 
+const PICKER_STYLE =
+{
+  width: "250px",
+    height: "200px",
+  position: "absolute",
+  bottom: "0",
+}
+
+
 const AddEmojiIconButton = styled(IconButton)`
   border: 0;
 `;
@@ -26,7 +35,6 @@ const TextInputWrapper = styled.div`
   border: 1px solid ${(p) => p.theme.border};
   padding-left: ${styleConstants.spacing.regular};
   border-radius: ${styleConstants.border.radius};
-  outline: 0;
   height: ${styleConstants.spacing.triple};
   display: flex;
   justify-content: space-between;
@@ -82,11 +90,11 @@ export const TextInput = (props: TextInputProps) => {
     }
   }, [focus]);
 
-  const handleUseEmoji = useCallback(() => {
+  const handleUseEmoji = useCallback((): void => {
     setUseEmoji(!useEmoji);
   }, [useEmoji]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);
     onValueChange(event.target.value);
   };
@@ -94,12 +102,7 @@ export const TextInput = (props: TextInputProps) => {
   const extendEmojiPicker = useEmoji ? (
     <PickerWrapper>
       <Picker
-        pickerStyle={{
-          width: "250px",
-          height: "200px",
-          position: "absolute",
-          bottom: "0",
-        }}
+        pickerStyle={PICKER_STYLE}
         disableSearchBar={true}
         native={true}
         onEmojiClick={handleMouseClick}

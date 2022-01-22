@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { ConfirmModal } from "./ConfirmModal";
 import userEvent from "@testing-library/user-event";
+import { ConfirmModal } from "../ConfirmModal";
 
 const fakeProps = {
   handleConfirm: jest.fn(),

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import Sidebar from "./Sidebar";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
+import Sidebar from "../Sidebar";
 
 function fakeHandlePageChange(page: string) {}
 
@@ -11,11 +11,6 @@ function renderSideBar() {
     </MemoryRouter>
   );
 }
-
-// it("should display application title", () => {
-//   renderSideBar();
-//   expect(screen.getByText("TODO")).toBeInTheDocument();
-// });
 
 it("should display available pages", () => {
   renderSideBar();
